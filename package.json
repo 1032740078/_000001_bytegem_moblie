@@ -1,0 +1,27 @@
+{
+  "name": "bytegem_moblie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1032740078/_000001_bytegem_moblie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1032740078/_000001_bytegem_moblie/issues"
+  },
+  "homepage": "https://github.com/1032740078/_000001_bytegem_moblie#readme",
+  "devDependencies": {
+    "@types/html5plus": "^1.0.0",
+    "@types/uni-app": "^1.4.1"
+  },
+  "dependencies": {
+    "vuex": "^3.1.2"
+  }
+}
