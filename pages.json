@@ -28,7 +28,11 @@
 			"path": "commons/login/login",
 			"style": {}
 		}
-	],
+	    ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "广州字节宝软件科技",

@@ -6,13 +6,19 @@
 			<view class="option">
 				<view class="box option-top">
 					<view class="box-flex">
-						<view class="option-card option-left option-activ">
+						<view
+							class="option-card option-left"
+							v-for="(quoted, quoted_key) in quoted_list"
+							:class="{ 'option-activ': quoted_list[quoted_key].activ }"
+							@click="quoted_click(quoted, quoted_key)"
+							:key="quoted_key"
+						>
 							<view class="option-circle"><i class="iconfont webpage" /></view>
-							<view class="option-head">WEB网页</view>
+							<view class="option-head">{{ quoted.quoted_list_name }}</view>
 							<view class="option-gougou"><i class="iconfont gougou" /></view>
 						</view>
 					</view>
-					<view class="box-flex">
+					<!-- <view class="box-flex">
 						<view class="option-card option-centre">
 							<view class="option-circle"><i class="iconfont apply" /></view>
 							<view class="option-head">移动应用</view>
@@ -48,7 +54,7 @@
 							<view class="option-head">其它项目</view>
 							<view class="option-gougou"><i class="iconfont gougou" /></view>
 						</view>
-					</view>
+					</view> -->
 				</view>
 				<!-- 未激活加 disabled="ture" -->
 				<button hover-class="app-btn-hover" @click="nextStep" class="app-btn ">下一步</button>
@@ -73,7 +79,10 @@ export default {
 		Bottom
 	},
 	data() {
-		return {};
+		return {
+			quoted_list: [],
+			click_index: []
+		};
 	},
 	onLoad() {},
 	computed: {
@@ -82,7 +91,7 @@ export default {
 	methods: {
 		//====请求区
 		quoted_list_find() {
-			quoted_list_find()
+			quoted_list_find().then(res => (this.quoted_list = res.data));
 		},
 		//=========逻辑区
 		offerBtn() {
@@ -92,19 +101,29 @@ export default {
 			});
 		},
 		nextStep() {
+			const quoted_click_data_list = [];
+			this.quoted_list.forEach(item => {
+				if (item.activ) {
+					quoted_click_data_list.push(item.id);
+				}
+			});
 			// 下一步按钮
 			uni.navigateTo({
-				url: '/pages/evaluate/evaluate'
+				url: '/pages/evaluate/evaluate?quoted_id=' + JSON.stringify(quoted_click_data_list)
 			});
+		},
+		quoted_click(data, quoted_key) {
+			//类目点击
+			this.$set(this.quoted_list[quoted_key], 'activ', !this.quoted_list[quoted_key].activ);
 		}
 	},
 	created() {
 		if (!this.token) {
 			uni.redirectTo({
-				url: 'login'
+				url: '../../pages/login/login'
 			});
-		}else{
-			this.quoted_list_find()
+		} else {
+			this.quoted_list_find();
 		}
 		// console.log(getApp().globalData.text);
 	}
@@ -144,6 +163,7 @@ export default {
 	height: 198upx;
 	border-radius: 12upx;
 	border: 1px solid #f2f2f2;
+	margin: 10upx 10upx;
 }
 
 .option-centre {
@@ -155,6 +175,9 @@ export default {
 	float: right;
 }
 
+.option-left {
+	float: left;
+}
 .option-circle {
 	/* background: #EBF9FA; */
 	background: #f8f8f8;
